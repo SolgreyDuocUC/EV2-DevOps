@@ -1,8 +1,0 @@
-{
-  "permissions": {
-    "allow": [
-      "Bash(Get-ChildItem -Path \"C:\\\\Users\\\\GAMER\\\\Desktop\\\\EV2-DevOps\\\\ISY1101_EP2_Proyecto Semestral\\\\proyecto semestral\\\\backend\\\\ms-despachos\" -Recurse -Depth 2)",
-      "Bash(Select-Object FullName, PSIsContainer)"
-    ]
-  }
-}

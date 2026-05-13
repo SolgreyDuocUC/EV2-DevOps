@@ -1,0 +1,17 @@
+INSTRUCCIONES GLOBALES - PROYECTO SEMESTRAL
+
+Este proyecto contiene un backend (microservicios), frontend (React) y bases de datos (MySQL) completamente dockerizados.
+
+PASOS PARA LEVANTAR TODO EL SISTEMA:
+1. Asegúrate de estar en la carpeta raíz del proyecto:
+   C:\Users\GAMER\Desktop\EV2-DevOps\ISY1101_EP2_Proyecto Semestral\proyecto semestral
+
+2. Ejecuta el comando:
+   docker-compose up --build -d
+
+3. Acceso a los servicios:
+   - Frontend: http://localhost
+   - API Ventas: http://localhost:8080/swagger-ui/index.html
+   - API Despachos: http://localhost:8081/swagger-ui/index.html
+
+Para instrucciones detalladas de cada componente, revisa los archivos 'instrucciones.txt' en cada carpeta.
