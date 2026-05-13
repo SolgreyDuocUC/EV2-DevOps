@@ -1,0 +1,23 @@
+INSTRUCCIONES PARA LEVANTAR EL PROYECTO CON DOCKER
+
+1. Requisitos:
+   - Tener Docker y Docker Compose instalados.
+   - Estar en la carpeta 'backend' del proyecto.
+
+2. Pasos para levantar todo:
+   - Abre una terminal en la carpeta 'backend'.
+   - Ejecuta el siguiente comando:
+     docker-compose up --build -d
+
+3. Puertos utilizados:
+   - Microservicio Ventas: http://localhost:8080
+   - Microservicio Despachos: http://localhost:8081
+   - Base de datos Ventas (MySQL): localhost:3306
+   - Base de datos Despachos (MySQL): localhost:3307
+
+4. Para detener todo:
+   - Ejecuta: docker-compose down
+
+5. Notas:
+   - La primera vez puede tardar unos minutos mientras descarga las imágenes de Maven y MySQL.
+   - Las bases de datos se crean automáticamente con los nombres 'ventas_db' y 'despachos_db'.

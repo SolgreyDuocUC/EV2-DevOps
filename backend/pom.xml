@@ -83,8 +83,8 @@
 
     <!-- MÓDULOS -->
     <modules>
-        <module>ms-ventas/Springboot-API-REST</module>
-        <module>ms-despachos/Springboot-API-REST-DESPACHO</module>
+        <module>ms-ventas</module>
+        <module>ms-despachos</module>
     </modules>
 
 </project>

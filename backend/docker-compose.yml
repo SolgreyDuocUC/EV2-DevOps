@@ -1,0 +1,60 @@
+services:
+  db-ventas:
+    build:
+      context: ../db/ventas
+      dockerfile: Dockerfile
+    container_name: db-ventas
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: ventas_db
+    ports:
+      - "3306:3306"
+    healthcheck:
+      test: ["CMD", "mysqladmin" ,"ping", "-h", "localhost"]
+      timeout: 20s
+      retries: 10
+
+  db-despachos:
+    build:
+      context: ../db/despachos
+      dockerfile: Dockerfile
+    container_name: db-despachos
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: despachos_db
+    ports:
+      - "3307:3306"
+    healthcheck:
+      test: ["CMD", "mysqladmin" ,"ping", "-h", "localhost"]
+      timeout: 20s
+      retries: 10
+
+  ms-ventas:
+    build:
+      context: .
+      dockerfile: ms-ventas/Dockerfile
+    container_name: ms-ventas
+    ports:
+      - "8080:8080"
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:mysql://db-ventas:3306/ventas_db
+      - SPRING_DATASOURCE_USERNAME=root
+      - SPRING_DATASOURCE_PASSWORD=root
+    depends_on:
+      db-ventas:
+        condition: service_healthy
+
+  ms-despachos:
+    build:
+      context: .
+      dockerfile: ms-despachos/Dockerfile
+    container_name: ms-despachos
+    ports:
+      - "8081:8081"
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:mysql://db-despachos:3306/despachos_db
+      - SPRING_DATASOURCE_USERNAME=root
+      - SPRING_DATASOURCE_PASSWORD=root
+    depends_on:
+      db-despachos:
+        condition: service_healthy
