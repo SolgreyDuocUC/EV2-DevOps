@@ -56,18 +56,18 @@ jobs:
           aws ssm send-command \
             --instance-ids "${{ secrets.EC2_VENTAS_ID }}" \
             --document-name "AWS-RunShellScript" \
-            --parameters 'commands=["cd /home/ubuntu/app && sudo docker-compose pull ms-ventas && sudo docker-compose up -d ms-ventas"]'
+            --parameters 'commands=["cd /home/ubuntu/app && sudo docker compose pull ms-ventas && sudo docker compose up -d ms-ventas"]'
 
       - name: Actualizar MS-Despachos en EC2
         run: |
           aws ssm send-command \
             --instance-ids "${{ secrets.EC2_DESPACHOS_ID }}" \
             --document-name "AWS-RunShellScript" \
-            --parameters 'commands=["cd /home/ubuntu/app && sudo docker-compose pull ms-despachos && sudo docker-compose up -d ms-despachos"]'
+            --parameters 'commands=["cd /home/ubuntu/app && sudo docker compose pull ms-despachos && sudo docker compose up -d ms-despachos"]'
 
       - name: Actualizar Frontend en EC2
         run: |
           aws ssm send-command \
             --instance-ids "${{ secrets.EC2_FRONTEND_ID }}" \
             --document-name "AWS-RunShellScript" \
-            --parameters 'commands=["cd /home/ubuntu/app-frontend && sudo docker-compose pull frontend && sudo docker-compose up -d frontend"]'
+            --parameters 'commands=["cd /home/ubuntu/app-frontend && sudo docker compose pull && sudo docker compose up -d"]'
