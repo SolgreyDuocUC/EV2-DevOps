@@ -1,0 +1,29 @@
+INSTRUCCIONES PARA EL FRONTEND (REACT + VITE)
+
+Este proyecto es el frontend de la tienda de despachos.
+
+--- MODO DESARROLLO (Local) ---
+1. Requisitos: Tener Node.js instalado.
+2. Pasos:
+   - Abre una terminal en la carpeta 'frontend'.
+   - Instala las dependencias:
+     npm install
+   - Inicia el servidor de desarrollo:
+     npm run dev
+   - Abre en tu navegador: http://localhost:5173
+
+--- MODO DOCKER (Recomendado) ---
+1. Requisitos: Tener Docker instalado.
+2. Pasos:
+   - Puedes levantarlo junto con todo el backend usando el docker-compose de la carpeta 'backend'.
+   - O puedes construir solo la imagen del frontend desde esta carpeta:
+     docker build -t frontend-app .
+   - Y correrlo:
+     docker run -d -p 80:80 frontend-app
+3. Acceso: http://localhost
+
+--- NOTAS IMPORTANTES ---
+- Configuración de API: El frontend se conecta a los microservicios de Ventas y Despachos.
+- Si cambias los puertos o la IP de los microservicios, asegúrate de actualizar las URLs en los archivos:
+  - src/componentes/CrudAdmin/TableCompras.jsx
+  - src/componentes/CrudAdmin/TableDespachos.jsx

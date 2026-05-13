@@ -58,3 +58,14 @@ services:
     depends_on:
       db-despachos:
         condition: service_healthy
+
+  frontend:
+    build:
+      context: ../frontend
+      dockerfile: Dockerfile
+    container_name: frontend
+    ports:
+      - "80:80"
+    depends_on:
+      - ms-ventas
+      - ms-despachos

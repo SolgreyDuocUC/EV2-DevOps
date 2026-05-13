@@ -10,6 +10,7 @@ INSTRUCCIONES PARA LEVANTAR EL PROYECTO CON DOCKER
      docker-compose up --build -d
 
 3. Puertos utilizados:
+   - Frontend (React): http://localhost
    - Microservicio Ventas: http://localhost:8080
    - Microservicio Despachos: http://localhost:8081
    - Base de datos Ventas (MySQL): localhost:3306
@@ -19,5 +20,6 @@ INSTRUCCIONES PARA LEVANTAR EL PROYECTO CON DOCKER
    - Ejecuta: docker-compose down
 
 5. Notas:
-   - La primera vez puede tardar unos minutos mientras descarga las imágenes de Maven y MySQL.
+   - La primera vez puede tardar unos minutos mientras descarga las imágenes de Node, Maven y MySQL.
    - Las bases de datos se crean automáticamente con los nombres 'ventas_db' y 'despachos_db'.
+   - IMPORTANTE: Asegúrate de que las URLs de los microservicios en el código del frontend coincidan con la IP de tu máquina en Docker.
