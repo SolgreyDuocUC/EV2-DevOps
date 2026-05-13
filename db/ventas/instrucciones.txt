@@ -1,0 +1,15 @@
+INSTRUCCIONES - DB VENTAS
+
+Esta es la base de datos MySQL para el microservicio de Ventas.
+
+CONFIGURACIÓN:
+- Imagen: MySQL 8.0
+- Base de datos inicial: ventas_db
+- Script de inicialización: init.sql (se ejecuta automáticamente al crear el contenedor).
+
+ACCESO EN DOCKER:
+- Host: db-ventas
+- Puerto: 3306
+
+ACCESO DESDE EL HOST:
+- Puerto: 3306

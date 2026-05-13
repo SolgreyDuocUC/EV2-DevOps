@@ -1,0 +1,16 @@
+INSTRUCCIONES - MS-VENTAS
+
+Este es el microservicio de gestión de órdenes de compra.
+
+TECNOLOGÍAS:
+- Java 21
+- Spring Boot 3.4.5
+- Maven
+
+DOCKER:
+- El Dockerfile utiliza una construcción multi-etapa (Maven + JRE).
+- Se recomienda ejecutarlo a través del docker-compose global en la raíz del proyecto.
+- Si se construye manualmente, el contexto debe ser la carpeta 'backend'.
+
+API:
+- Swagger UI disponible en: http://localhost:8080/swagger-ui/index.html
