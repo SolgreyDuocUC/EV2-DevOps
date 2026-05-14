@@ -2,8 +2,11 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import { Modal } from "./Modal";
 import { FormCierreDespacho } from "./FormCierreDespacho";
-//inicio de la función que muestra la tabla de despachos
-const TableDespacho = async () => {
+
+export const TableDespachos = () => {
+  const [despachos, setDespachos] = useState([]);
+
+  const despacho = async () => {
     await axios
       .get("/api/v1/despachos", {
         headers: {
@@ -13,25 +16,30 @@ const TableDespacho = async () => {
       })
       .then((response) => {
         console.log("Respuesta del backend (Despachos):", response.data);
-        
         // EL ESCUDO: Verificamos si Nginx/Backend nos devolvió una lista real
         if (Array.isArray(response.data)) {
           setDespachos(response.data);
         } else {
           console.error("Error: El backend no devolvió un Array válido. Recibido:", response.data);
-          setDespachos([]); // Dejamos la lista vacía para que el .map() no rompa la página
+          setDespachos([]); // Evita que explote el .map()
         }
       })
       .catch((error) => {
         console.error("Error de red o del servidor al pedir despachos:", error);
-        setDespachos([]); // En caso de que el servidor falle (Ej: Timeout o 502), evitamos el crasheo
+        setDespachos([]); 
       });
   };
+
+  // Llamada a la función para obtener los datos cuando el componente se monta
+  useEffect(() => {
+    despacho();
+  }, []);
+
   const [openModal, setOpenModal] = useState(false);
   const [despachoSeleccionado, setDespachoSeleccionado] = useState(null);
 
-  const handleAbrirModal = (despacho) => {
-    setDespachoSeleccionado(despacho);
+  const handleAbrirModal = (despachoData) => {
+    setDespachoSeleccionado(despachoData);
     setOpenModal(true);
   };
 
@@ -50,37 +58,26 @@ const TableDespacho = async () => {
                   <th className="pr-10">Patente Camión</th>
                   <th className="pr-10">Entregado</th>
                   <th className="pr-10">Intentos de entrega</th>
+                  <th className="pr-10"></th>
                 </tr>
               </thead>
               <tbody>
-                {despachos
-               
-                .map((despacho) => (
-                  <tr key={despacho.idDespacho}>
-                    <td className="pr-10 py-10 items-center">{despacho.idDespacho}</td>
-                    <td className="pr-10 py-10  items-center">
-                      {despacho.idCompra}
-                    </td>
-                    <td className="pr-10 py-10  items-center">
-                      {despacho.direccionCompra}
-                    </td>
-                    <td className="pr-10 py-10  items-center">
-                      {despacho.fechaDespacho}
-                    </td>
-                    <td className="pr-10 py-10  items-center">
-                      {despacho.patenteCamion}
-                    </td>
-                    <td className="pr-10 py-10  items-center">
-                      {despacho.entregado
+                {despachos.map((despachoItem) => (
+                  <tr key={despachoItem.idDespacho}>
+                    <td className="pr-10 py-10 items-center">{despachoItem.idDespacho}</td>
+                    <td className="pr-10 py-10 items-center">{despachoItem.idCompra}</td>
+                    <td className="pr-10 py-10 items-center">{despachoItem.direccionCompra}</td>
+                    <td className="pr-10 py-10 items-center">{despachoItem.fechaDespacho}</td>
+                    <td className="pr-10 py-10 items-center">{despachoItem.patenteCamion}</td>
+                    <td className="pr-10 py-10 items-center">
+                      {despachoItem.entregado
                         ? "Despacho entregado"
                         : "Despacho pendiente"}
                     </td>
-                    <td className="pr-10 py-10  items-center">
-                      {despacho.intento}
-                    </td>
+                    <td className="pr-10 py-10 items-center">{despachoItem.intento}</td>
                     <td>
                       <button
-                        onClick={() => handleAbrirModal(despacho)}
+                        onClick={() => handleAbrirModal(despachoItem)}
                         className="py-1 bg-orange-200 px-8 rounded-xl shadow-md hover:bg-orange-300/70 transition-all duration-300 "
                       >
                         Cerrar despacho
@@ -103,12 +100,12 @@ const TableDespacho = async () => {
           <FormCierreDespacho
             despacho={despachoSeleccionado}
             onClose={() => {
-              //onclose es un prop que pasa funciones al modal con el form abierto, por ende al cerrarse, se ejecutan esas 2 funciones
-              setOpenModal(false), despacho();
+              setOpenModal(false);
+              despacho();
             }}
           />
         )}
       </Modal>
     </>
   );
-
+};
