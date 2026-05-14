@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import { Modal } from "./Modal";
 import { FormCierreDespacho } from "./FormCierreDespacho";
-
+//inicio de la función que muestra la tabla de despachos
 const TableDespacho = async () => {
     await axios
       .get("/api/v1/despachos", {
