@@ -3,27 +3,30 @@ import axios from "axios";
 import { Modal } from "./Modal";
 import { FormCierreDespacho } from "./FormCierreDespacho";
 
-export const TableDespachos = () => {
-  const [despachos, setDespachos] = useState([]);
-
-  const despacho = async () => {
+const TableDespacho = async () => {
     await axios
       .get("/api/v1/despachos", {
-        headers:{
-              'Content-Type': 'application/json',
-              'Accept': 'application/json'
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
         }
       })
       .then((response) => {
-        console.log(response.data);
-        setDespachos(response.data);
+        console.log("Respuesta del backend (Despachos):", response.data);
+        
+        // EL ESCUDO: Verificamos si Nginx/Backend nos devolvió una lista real
+        if (Array.isArray(response.data)) {
+          setDespachos(response.data);
+        } else {
+          console.error("Error: El backend no devolvió un Array válido. Recibido:", response.data);
+          setDespachos([]); // Dejamos la lista vacía para que el .map() no rompa la página
+        }
+      })
+      .catch((error) => {
+        console.error("Error de red o del servidor al pedir despachos:", error);
+        setDespachos([]); // En caso de que el servidor falle (Ej: Timeout o 502), evitamos el crasheo
       });
   };
-  // Llamada a la función para obtener los datos cuando el componente se monta
-  useEffect(() => {
-    despacho();
-  }, []);
-
   const [openModal, setOpenModal] = useState(false);
   const [despachoSeleccionado, setDespachoSeleccionado] = useState(null);
 
@@ -108,4 +111,4 @@ export const TableDespachos = () => {
       </Modal>
     </>
   );
-};
+

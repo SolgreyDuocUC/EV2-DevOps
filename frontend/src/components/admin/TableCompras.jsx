@@ -6,21 +6,37 @@ import axios from "axios";
 export const TableCompras = () => {
   const [ventas, setVentas] = useState([]);
 
-  const compras = async () => {
+const compras = async () => {
     await axios.get("/api/v1/ventas", {
-      headers:{
-        'Content-Type': 'application/json',
-        'Accept': 'application/json'
-  }
+      headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' }
     }).then((response) => {
-      console.log(response.data);
-      setVentas(response.data);
+      //guarda si es un Array
+      if (Array.isArray(response.data)) {
+        setVentas(response.data);
+      } else {
+        console.error("El backend no devolvió una lista:", response.data);
+        setVentas([]); // Lo dejamos vacío para que no explote
+      }
     });
   };
+
+
+
+//  const compras = async () => {
+//    await axios.get("/api/v1/ventas", {
+//      headers:{
+//        'Content-Type': 'application/json',
+//        'Accept': 'application/json'
+//  }
+//    }).then((response) => {
+//      console.log(response.data);
+//      setVentas(response.data);
+//    });
+//  };
   // Llamada a la función para obtener los datos cuando el componente se monta
-  useEffect(() => {
-    compras();
-  }, []);
+//  useEffect(() => {
+ //   compras();
+ // }, []);
 
   //state que controla el modal
   const [openModal, setOpenModal] = useState(false);
